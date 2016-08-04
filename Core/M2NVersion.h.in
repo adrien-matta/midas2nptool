@@ -1,0 +1,5 @@
+namespace M2N{
+  std::string version_major="@M2N_VERSION_MAJOR@";
+  std::string version_minor="@M2N_VERSION_MINOR@";
+  std::string version_deta="@M2N_VERSION_DETS@";
+}
