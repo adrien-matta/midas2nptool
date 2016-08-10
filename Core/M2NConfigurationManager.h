@@ -13,10 +13,20 @@ namespace M2N{
     public:
       void ReadConfiguration(string path);
 
-    private:
-      map<int,string> m_adc;
-      map<int,string> m_tdc;
+    private: // maps
+      map<int,string> m_ADC;
+      map<int,string> m_TDC;
 
+    private: // adc
+      int m_ADCbase;
+      int m_ADCoffset;
+    
+    private: // tdc
+      int m_TDCbase;
+      int m_TDCoffset;
+
+    private: // Tree
+      string m_TreeName;
   };
 
 

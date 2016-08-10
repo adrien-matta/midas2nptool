@@ -7,6 +7,6 @@ using namespace std;
 int main(void){
   cout << "Hello World" << endl;
   M2N::ConfigurationManager configManager;
-  configManager.ReadConfiguration("pipo");
+  configManager.ReadConfiguration("test.txt");
 
 } 
