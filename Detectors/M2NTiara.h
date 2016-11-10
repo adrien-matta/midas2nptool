@@ -21,7 +21,7 @@ namespace M2N{
       ~Tiara();
 
     public:
-      void Fill(string& token, double value) {};
+      void Fill(string& token, double value);
       void InitBranch(TTree* tree) {};
       void Clear();
 

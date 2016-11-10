@@ -21,6 +21,10 @@ namespace M2N{
     public: // Heavy work
       void TreatFile();
 
+    public: // Generate tag to simulate a TreatFile 
+      void SimulateTreat(int event, int cmin=0 , int cmax=65536, int vmin=0 , int vmax=65536);
+
+
     private: 
       M2N::DetectorManager* m_DetectorManager;
       string m_FileName;

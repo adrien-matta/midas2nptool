@@ -1,10 +1,12 @@
 
 // M2N
-#include"M2NMidasInput.h"
+#include "M2NMidasInput.h"
 //STL
-#include<fstream>
+#include <fstream>
 #include <Riostream.h>
 #include <Byteswap.h>
+//ROOT
+#include "TRandom.h"
 
 using namespace std;
 
@@ -174,5 +176,25 @@ void M2N::MidasInput::TreatFile(){
 
 
 }
+////////////////////////////////////////////////////////////////////////////////
+void M2N::MidasInput::SimulateTreat(int event, int cmin , int cmax, int vmin,int vmax){
+  unsigned int count;
+  cout << "Starting Simulation " << endl;
+  TRandom rand;
 
+  while( count++ < event){
+  int channel;
+  int value;
+  if(count%500==0)
+    cout <<"\r **** Simulating treat : " << count*100.0/event  << "% ****" ;
+
+    // Random channel
+    channel = rand.Uniform(cmin,cmax);
+    
+    // Random value
+    value = rand.Uniform(vmin,vmax);
+    m_DetectorManager->Fill(channel,value);
+  }
+  cout << endl;
+}
 

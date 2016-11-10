@@ -1,4 +1,3 @@
-
 // STL
 #include<iostream>
 #include<fstream>
@@ -18,15 +17,22 @@ M2N::DetectorManager::DetectorManager(){
 }
 ////////////////////////////////////////////////////////////////////////////////
 M2N::DetectorManager::~DetectorManager(){
+   map<string,M2N::VDetector*>::iterator it;
+
+  for (it = m_Detector.begin(); it != m_Detector.end(); ++it) {
+    delete it->second;
+  }
+
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::Fill(int& address, int& value){
- m_address[address]->Fill(m_token[address],value); 
+  if(m_address.find(address)!=m_address.end())
+    m_address[address]->Fill(m_token[address],value); 
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::Clear(){
   map<string,M2N::VDetector*>::iterator it;
-  
+
   for (it = m_Detector.begin(); it != m_Detector.end(); ++it) {
     it->second->Clear();
   }
@@ -48,34 +54,37 @@ void M2N::DetectorManager::ReadConfiguration(string path){
   int value,channel,module;
   // Reading setting line
   infile >> key; 
-    while(key!="MAP"){
-      if(key == "ADC"){
-        infile >> token >> value;
-        if(token == "BASE")
-          m_ADCbase = value;
-        else if(token == "OFFSET")
-          m_ADCoffset = value;
-      } 
+  while(key!="MAP"){
+    if(key == "ADC"){
+      infile >> token >> value;
+      if(token == "BASE")
+        m_ADCbase = value;
+      else if(token == "OFFSET")
+        m_ADCoffset = value;
+    } 
 
-      else if(key == "TDC"){
-        infile >> token >> value;
-        if(token == "BASE")
-          m_TDCbase = value;
-        else if(token == "OFFSET")
-          m_TDCoffset = value;
-      }
-     
-      else if(key == "TREE"){
-        infile >> token >> buffer;
-        if(token == "NAME")
-          m_TreeName = buffer;
-      }
-
-      else{
-        cout << "**** INFO : Token unknown : " << token << " ****" << endl;
-      }
-      infile >> key ;
+    else if(key == "TDC"){
+      infile >> token >> value;
+      if(token == "BASE")
+        m_TDCbase = value;
+      else if(token == "OFFSET")
+        m_TDCoffset = value;
     }
+
+    else if(key == "TREE"){
+      infile >> token >> buffer;
+      if(token == "NAME")
+        m_TreeName = buffer;
+    }
+    else if(key.compare(0,0,"%")!=0){
+      //do nothing, its a comment
+    }
+
+    else{
+      cout << "**** INFO : Token unknown : " << token << " ****" << endl;
+    }
+    infile >> key ;
+  }
 
   if(m_ADCbase!=-1){
     cout << "**** ADC setting : Base = " << m_ADCbase << " Offset = " << m_ADCoffset << " ****" << endl; 
@@ -87,36 +96,38 @@ void M2N::DetectorManager::ReadConfiguration(string path){
 
 
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
-    cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << endl;
-   
-   M2N::VDetector* Det = GetDetector(detector); 
-   int address=-1;
-    if(key == "ADC")
-      address = ADCChannelToAddress(module,channel);
-          
-    else if(key == "TDC")
-      address = TDCChannelToAddress(module,channel);
-    
-    else{
-      cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
-      exit(1);
+    if(key.compare(0,0,"%")!=0){
+      cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
+
+      M2N::VDetector* Det = GetDetector(detector); 
+      int address=-1;
+      if(key == "ADC")
+        address = ADCChannelToAddress(module,channel);
+
+      else if(key == "TDC")
+        address = TDCChannelToAddress(module,channel);
+
+      else{
+        cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
+        exit(1);
+      }
+      cout << address << endl; 
+      m_address[address] = Det;
+      m_token[address] = token;
     }
-    
-    m_address[address] = Det;
-    m_token[address] = token;
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 M2N::VDetector* M2N::DetectorManager::GetDetector(string& name){
-    // look if the detector already exist in the map
-    if(m_Detector.find(name)!=m_Detector.end()){
-      return m_Detector[name];
-    } 
-    else{
-      m_Detector[name]=M2N::DetectorFactory::getInstance()->Construct(name);
-      return m_Detector[name];
-    }
+  // look if the detector already exist in the map
+  if(m_Detector.find(name)!=m_Detector.end()){
+    return m_Detector[name];
+  } 
+  else{
+    m_Detector[name]=M2N::DetectorFactory::getInstance()->Construct(name);
+    return m_Detector[name];
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
