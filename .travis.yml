@@ -1,0 +1,50 @@
+sudo: required
+dist: trusty
+language: cpp
+
+os:
+  - linux
+
+compiler:
+  - gcc
+
+before_install:
+  # Linux
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ trusty main universe"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq install root-system; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd && wget https://www.dropbox.com/s/8hxjkd6twdsv5fi/geant4_install_new.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf geant4_install_new.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/geant4_install/share/Geant4-10.1.2/geant4make/geant4make.sh; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd && wget -O ./nptool.tar.gz https://dl.dropboxusercontent.com/u/32340790/travis/nptool_root6_geant10.tar.gz?dl=1; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf nptool.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/nptool/nptool.sh; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ~/nptool/NPLib/scripts/RootLogon.sh; fi
+
+  # Dumping stuff for check
+  - root-config --version
+
+install:
+
+script:
+  - cmake --version
+  - cd midas2nptool 
+  - cmake ./
+  - make install 
+
+after_success:
+
+branches:
+  only:
+    - midas2nptool
+
+addons:
+  apt:
+    packages:
+    - ninja-build
+
+#notifications:
+#  email:
+#    recipients:
+#      - mhd.moukaddam@gmail.com
+#    on_success: change
+#    on_failure: always
