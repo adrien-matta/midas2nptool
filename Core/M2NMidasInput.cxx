@@ -30,6 +30,9 @@ void M2N::MidasInput::SetFileName(string filename){
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::MidasInput::TreatFile(){
+
+  cout << "\r------------------------Starting Process-------------------------" << endl;
+
   // Minor adaptation of Raw_Tree.C macro from University of York group 
 /*   if(unzip) {
     TString zipcmd = Form("gunzip %s.gz", f_in.Data());

@@ -108,7 +108,7 @@ void M2N::DetectorManager::ReadConfiguration(string path){
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
     if(key.compare(0,0,"%")!=0){
       cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
-
+      
       M2N::VDetector* Det = GetDetector(detector); 
       int address=-1;
       if(key == "ADC")

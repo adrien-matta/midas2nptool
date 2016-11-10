@@ -56,7 +56,7 @@ M2N::VDetector* M2N::DetectorFactory::Construct(std::string Token){
     return  m_Construct[Token]();
 
   else if( m_TokenLib.find(Token)!=m_TokenLib.end()){
-   // Add absolute path to library name
+    // Add absolute path to library name
     std::string path = getenv("M2N"); 
     std::string libName = path+"/lib/"+m_TokenLib[Token];
     dlopen(libName.c_str(),RTLD_NOW | RTLD_GLOBAL);
