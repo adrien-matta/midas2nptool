@@ -20,6 +20,19 @@ M2N::DetectorManager::DetectorManager(){
 M2N::DetectorManager::~DetectorManager(){
 }
 ////////////////////////////////////////////////////////////////////////////////
+void M2N::DetectorManager::Fill(int& address, int& value){
+ m_address[address]->Fill(m_token[address],value); 
+}
+////////////////////////////////////////////////////////////////////////////////
+void M2N::DetectorManager::Clear(){
+  map<string,M2N::VDetector*>::iterator it;
+  
+  for (it = m_Detector.begin(); it != m_Detector.end(); ++it) {
+    it->second->Clear();
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::ReadConfiguration(string path){
   ifstream infile(path.c_str());
   if(infile.is_open()){
@@ -77,18 +90,25 @@ void M2N::DetectorManager::ReadConfiguration(string path){
     cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << endl;
    
    M2N::VDetector* Det = GetDetector(detector); 
- 
-    if(key == "ADC"){
-      ADCChannelToAddress(module,channel);
+   int address=-1;
+    if(key == "ADC")
+      address = ADCChannelToAddress(module,channel);
+          
+    else if(key == "TDC")
+      address = TDCChannelToAddress(module,channel);
+    
+    else{
+      cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
+      exit(1);
     }
-    else if(key == "TDC"){
-      TDCChannelToAddress(module,channel);
-    }
+    
+    m_address[address] = Det;
+    m_token[address] = token;
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-M2N::VDetector* M2N::DetectorManager::GetDetector(string name){
+M2N::VDetector* M2N::DetectorManager::GetDetector(string& name){
     // look if the detector already exist in the map
     if(m_Detector.find(name)!=m_Detector.end()){
       return m_Detector[name];
@@ -100,12 +120,12 @@ M2N::VDetector* M2N::DetectorManager::GetDetector(string name){
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int  M2N::DetectorManager::ADCChannelToAddress(int ADC, int Channel){
+int  M2N::DetectorManager::ADCChannelToAddress(int& ADC, int& Channel){
   return (ADC*m_ADCbase+Channel+m_TDCoffset);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int  M2N::DetectorManager::TDCChannelToAddress(int TDC, int Channel){
+int  M2N::DetectorManager::TDCChannelToAddress(int& TDC, int& Channel){
   return (TDC*m_TDCbase+Channel+m_TDCoffset);
 }
 

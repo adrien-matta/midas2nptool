@@ -19,13 +19,16 @@ namespace M2N{
 
     public:
       void ReadConfiguration(string path);
-      int  ADCChannelToAddress(int ADC, int Channel);
-      int  TDCChannelToAddress(int ADC, int Channel);
-      VDetector* GetDetector(string name);
+      void Fill(int& address, int& value);
+      void Clear();
+      int  ADCChannelToAddress(int& ADC, int& channel);
+      int  TDCChannelToAddress(int& ADC, int& channel);
+      VDetector* GetDetector(string& name);
 
     private: // maps
-      map<int,M2N::VDetector*> m_ADC;
-      map<int,M2N::VDetector*> m_TDC;
+      map<int,M2N::VDetector*> m_address;
+      map<int,string> m_token;
+
       map<string,M2N::VDetector*> m_Detector;
 
     private: // adc
