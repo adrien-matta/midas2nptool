@@ -4,8 +4,9 @@
 message("Looking for Root:")
 set(NPTOOL_ROOT_SEARCHPATH 
     $ENV{ROOTSYS}/bin 
-    /usr/bin
     $ENV{PATH}
+    /usr/bin
+    /opt/local/bin
    )
 
 find_program(NPTOOL_ROOT_CONFIG NAMES root-config PATHS ${NPTOOL_ROOT_SEARCHPATH} NO_DEFAULT_PATH)

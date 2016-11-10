@@ -1,11 +1,42 @@
 
 #include"M2NTiara.h"
-
-
+#include"M2NDetectorFactory.h"
+#include<iostream>
+using namespace std;
+////////////////////////////////////////////////////////////////////////////////
 M2N::Tiara::Tiara(){
+cout << "Hello Tiara" << endl;
+  m_Barrel= new TTiaraBarrelData();
 }
 
+////////////////////////////////////////////////////////////////////////////////
 M2N::Tiara::~Tiara(){
+cout << "bye bye Tiara" << endl;
+}
+////////////////////////////////////////////////////////////////////////////////
+void M2N::Tiara::Clear(){
+  m_Barrel->Clear();
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//            Construct Method to be pass to the DetectorFactory              //
+////////////////////////////////////////////////////////////////////////////////
+M2N::VDetector* M2N::Tiara::Construct(){
+  return (M2N::VDetector*) new Tiara();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//            Registering the construct method to the factory                 //
+////////////////////////////////////////////////////////////////////////////////
+extern "C"{
+class proxy_m2ntiara{
+  public:
+    proxy_m2ntiara(){
+      M2N::DetectorFactory::getInstance()->AddToken("Tiara","Tiara");
+      M2N::DetectorFactory::getInstance()->AddDetector("Tiara",M2N::Tiara::Construct);
+    }
+};
+
+proxy_m2ntiara p_m2ntiara;
+}
 

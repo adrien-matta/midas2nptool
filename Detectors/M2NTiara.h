@@ -28,6 +28,9 @@ namespace M2N{
     private:
       TTiaraBarrelData* m_Barrel;
 
+    public: // Static constructor to be passed to the Detector Factory
+      static M2N::VDetector* Construct();
+
   };
 }
 #endif

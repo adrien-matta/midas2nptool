@@ -1,7 +1,12 @@
-#include"M2NDetectorManager.h"
+
+// STL
 #include<iostream>
 #include<fstream>
 using namespace std;
+
+// M2M
+#include"M2NDetectorManager.h"
+#include"M2NDetectorFactory.h"
 ////////////////////////////////////////////////////////////////////////////////
 M2N::DetectorManager::DetectorManager(){
   m_ADCbase = -1 ;
@@ -9,6 +14,7 @@ M2N::DetectorManager::DetectorManager(){
   m_TDCbase = -1 ;
   m_TDCoffset = -1 ;
   m_TreeName = "M2NTree";
+  M2N::DetectorFactory::getInstance()->ReadClassList("ClassList.txt");
 }
 ////////////////////////////////////////////////////////////////////////////////
 M2N::DetectorManager::~DetectorManager(){
@@ -70,7 +76,7 @@ void M2N::DetectorManager::ReadConfiguration(string path){
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
     cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << endl;
    
-    
+   M2N::VDetector* Det = GetDetector(detector); 
  
     if(key == "ADC"){
       ADCChannelToAddress(module,channel);
@@ -88,7 +94,7 @@ M2N::VDetector* M2N::DetectorManager::GetDetector(string name){
       return m_Detector[name];
     } 
     else{
-//      m_Detector[name]=M2N::DetectorFactory(name);
+      m_Detector[name]=M2N::DetectorFactory::getInstance()->Construct(name);
       return m_Detector[name];
     }
 }
