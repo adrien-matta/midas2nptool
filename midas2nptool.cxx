@@ -1,12 +1,12 @@
 #include<iostream>
 using namespace std;
 
-#include"M2NConfigurationManager.h"
+#include"M2NDetectorManager.h"
 
 
 int main(void){
   cout << "Hello World" << endl;
-  M2N::ConfigurationManager configManager;
+  M2N::DetectorManager configManager;
   configManager.ReadConfiguration("test.txt");
 
 } 

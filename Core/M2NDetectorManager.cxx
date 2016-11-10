@@ -1,9 +1,9 @@
-#include"M2NConfigurationManager.h"
+#include"M2NDetectorManager.h"
 #include<iostream>
 #include<fstream>
 using namespace std;
 ////////////////////////////////////////////////////////////////////////////////
-M2N::ConfigurationManager::ConfigurationManager(){
+M2N::DetectorManager::DetectorManager(){
   m_ADCbase = -1 ;
   m_ADCoffset = -1 ;
   m_TDCbase = -1 ;
@@ -11,10 +11,10 @@ M2N::ConfigurationManager::ConfigurationManager(){
   m_TreeName = "M2NTree";
 }
 ////////////////////////////////////////////////////////////////////////////////
-M2N::ConfigurationManager::~ConfigurationManager(){
+M2N::DetectorManager::~DetectorManager(){
 }
 ////////////////////////////////////////////////////////////////////////////////
-void M2N::ConfigurationManager::ReadConfiguration(string path){
+void M2N::DetectorManager::ReadConfiguration(string path){
   ifstream infile(path.c_str());
   if(infile.is_open()){
     cout << "**** Reading configuration file : " << path << " ****" << endl;  
@@ -26,7 +26,7 @@ void M2N::ConfigurationManager::ReadConfiguration(string path){
 
 
   string key,buffer, detector,token;
-  int value,channel;
+  int value,channel,module;
   // Reading setting line
   infile >> key; 
     while(key!="MAP"){
@@ -67,11 +67,39 @@ void M2N::ConfigurationManager::ReadConfiguration(string path){
   }
 
 
-  while(infile >> key >> value >> buffer >> channel >> detector >> token){
-    cout << key << " " << value << " " << buffer << " " << channel << " " << detector << " " << token << endl;
+  while(infile >> key >> module >> buffer >> channel >> detector >> token){
+    cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << endl;
+   
+    
+ 
+    if(key == "ADC"){
+      ADCChannelToAddress(module,channel);
+    }
+    else if(key == "TDC"){
+      TDCChannelToAddress(module,channel);
+    }
   }
-
 }
 
+////////////////////////////////////////////////////////////////////////////////
+M2N::VDetector* M2N::DetectorManager::GetDetector(string name){
+    // look if the detector already exist in the map
+    if(m_Detector.find(name)!=m_Detector.end()){
+      return m_Detector[name];
+    } 
+    else{
+//      m_Detector[name]=M2N::DetectorFactory(name);
+      return m_Detector[name];
+    }
+}
 
+////////////////////////////////////////////////////////////////////////////////
+int  M2N::DetectorManager::ADCChannelToAddress(int ADC, int Channel){
+  return (ADC*m_ADCbase+Channel+m_TDCoffset);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int  M2N::DetectorManager::TDCChannelToAddress(int TDC, int Channel){
+  return (TDC*m_TDCbase+Channel+m_TDCoffset);
+}
 

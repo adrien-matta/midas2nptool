@@ -53,16 +53,6 @@ if(NOCPPFLAGS)
 endif()
 
 
- # Detector List
-set(DETLIST ${NPLib_DETECTOR_LIST})
-
-string(COMPARE EQUAL "${DETLIST}" "" rdet)
-if(rdet)
-    message("Building all detectors")
-  else()
-    message("Building the following detectors ${DETLIST}") 
-endif()
-
 # If the compiler is Clang, silence the unrecognised flags
 if(${CMAKE_CXX_COMPILER_ID} MATCHES ".*Clang.*")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Qunused-arguments -fcolor-diagnostics -Wno-deprecated-register -Wno-shadow")
@@ -72,40 +62,11 @@ set(CMAKE_BINARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 set(CMAKE_INCLUDE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/include )
 
-# A macro that return the list of directory to compile
-MACRO(subdirlist result curdir)
-  FILE(GLOB children RELATIVE ${curdir} ${curdir}/Detectors/*)
-  SET(dirlist "")
-  FOREACH(child ${children})
-    IF(IS_DIRECTORY ${curdir}/${child})
-      string(COMPARE EQUAL "${child}" "CMakeFiles" r0)
-      string(COMPARE EQUAL "${child}" ".DS_Store" r1) 
-      set(det "")
-      string(REPLACE "Detectors/" "" det ${child})
-
-      IF(NOT r0 AND NOT r1)
-        string(COMPARE EQUAL "${DETLIST}" "" r2)
-        IF(r2)
-          LIST(APPEND dirlist ${child})
-        ELSEIF(${DETLIST} MATCHES ".*${det}.*" )
-          LIST(APPEND dirlist ${child}) 
-        ENDIF()
-      ENDIF()
-    ENDIF()
-  ENDFOREACH()
-  SET(${result} ${dirlist})
-ENDMACRO()
-
-# Call the Macro
-subdirlist(SUB_DIRECTORY ${CMAKE_BINARY_DIR})
-set(SUB_DIRECTORY ${SUB_DIRECTORY} Core)
-include_directories("Core/")
-
-# Add each sub folder to the project
-foreach(subdir ${SUB_DIRECTORY})
-# add the subdirectory
-  add_subdirectory(${subdir}) 
- endforeach()
+#include
+include_directories("Core")
+# compilation
+add_subdirectory("Core") 
+add_subdirectory("Detectors") 
 
 add_executable(midas2nptool midas2nptool.cxx)
 target_Link_libraries(midas2nptool ${ROOT_LIBRARIES} M2NCore)
