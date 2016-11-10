@@ -25,10 +25,20 @@ M2N::DetectorManager::~DetectorManager(){
 
 }
 ////////////////////////////////////////////////////////////////////////////////
-void M2N::DetectorManager::Fill(int& address, int& value){
+void M2N::DetectorManager::Fill(int address, int value){
+  //cout << address << " " << value << endl;
   if(m_address.find(address)!=m_address.end())
     m_address[address]->Fill(m_token[address],value); 
 }
+////////////////////////////////////////////////////////////////////////////////
+void M2N::DetectorManager::InitBranch(){
+  map<string,M2N::VDetector*>::iterator it;
+
+  for (it = m_Detector.begin(); it != m_Detector.end(); ++it) {
+    it->second->InitBranch();
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::Clear(){
   map<string,M2N::VDetector*>::iterator it;
@@ -116,6 +126,7 @@ void M2N::DetectorManager::ReadConfiguration(string path){
       m_token[address] = token;
     }
   }
+  InitBranch();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -132,11 +143,11 @@ M2N::VDetector* M2N::DetectorManager::GetDetector(string& name){
 
 ////////////////////////////////////////////////////////////////////////////////
 int  M2N::DetectorManager::ADCChannelToAddress(int& ADC, int& Channel){
-  return (ADC*m_ADCbase+Channel+m_TDCoffset);
+  return ((ADC-1)*m_ADCbase+Channel+m_ADCoffset);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 int  M2N::DetectorManager::TDCChannelToAddress(int& TDC, int& Channel){
-  return (TDC*m_TDCbase+Channel+m_TDCoffset);
+  return ((TDC-1)*m_TDCbase+Channel+m_TDCoffset);
 }
 

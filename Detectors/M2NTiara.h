@@ -22,7 +22,7 @@ namespace M2N{
 
     public:
       void Fill(string& token, double value);
-      void InitBranch(TTree* tree) {};
+      void InitBranch();
       void Clear();
 
     private:

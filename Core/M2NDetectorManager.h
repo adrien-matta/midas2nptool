@@ -19,7 +19,8 @@ namespace M2N{
 
     public:
       void ReadConfiguration(string path);
-      void Fill(int& address, int& value);
+      void Fill(int address, int value);
+      void InitBranch();
       void Clear();
       int  ADCChannelToAddress(int& ADC, int& channel);
       int  TDCChannelToAddress(int& ADC, int& channel);

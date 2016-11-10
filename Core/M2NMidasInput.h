@@ -27,6 +27,7 @@ namespace M2N{
 
     private: 
       M2N::DetectorManager* m_DetectorManager;
+      TTree* m_Tree;
       string m_FileName;
   };
 }

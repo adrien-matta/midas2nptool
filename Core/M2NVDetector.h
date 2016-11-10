@@ -14,7 +14,7 @@ namespace M2N{
 
     public:
       virtual void Fill(string& token, double value) {};
-      virtual void InitBranch(TTree* tree) {};
+      virtual void InitBranch() {};
       virtual void Clear() {};
   };
 }

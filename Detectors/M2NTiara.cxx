@@ -1,8 +1,12 @@
-
-#include"M2NTiara.h"
-#include"M2NDetectorFactory.h"
-#include<iostream>
+// STL
+#include <iostream>
 using namespace std;
+
+// M2N
+#include "M2NTiara.h"
+#include "M2NDetectorFactory.h"
+#include "M2NRootOutput.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 M2N::Tiara::Tiara(){
   m_Barrel= new TTiaraBarrelData();
@@ -14,6 +18,7 @@ M2N::Tiara::~Tiara(){
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::Clear(){
   m_Barrel->Clear();
+
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::Fill(string& token, double value){
@@ -44,8 +49,9 @@ void M2N::Tiara::Fill(string& token, double value){
     // Fill in the class 
     if(energy){
       if(front){
-        if(up)
+        if(up){
           m_Barrel->SetFrontUpstreamE(b,s,value);
+        }
         else
           m_Barrel->SetFrontDownstreamE(b,s,value);
       }
@@ -69,6 +75,12 @@ void M2N::Tiara::Fill(string& token, double value){
     // to do
   }  
 }
+////////////////////////////////////////////////////////////////////////////////
+void M2N::Tiara::InitBranch(){
+  // Barrel
+  M2N::RootOutput::getInstance()->GetTree()->Branch("TiaraBarrel","TTiaraBarrelData",&m_Barrel);
+
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 //            Construct Method to be pass to the DetectorFactory              //
