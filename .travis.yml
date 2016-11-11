@@ -23,6 +23,7 @@ before_install:
   # Install  NPTool and NPData (needed to run examples suite)
   - cd 
   - git clone https://github.com/adrien-matta/nptool
+  - source ~/nptool/nptool.sh
   - cd $NPTOOL
   - git clone https://github.com/adrien-matta/NPData 
   - cd $NPTOOL/NPLib 
