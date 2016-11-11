@@ -21,8 +21,8 @@ before_install:
   # Dumping stuff for check
   - root-config --version
 
-  - cd 
-  - git clone https://github.com/moukaddam/midas2nptool
+  #- cd 
+  #- git clone https://github.com/moukaddam/midas2nptool
 
 install:
 
