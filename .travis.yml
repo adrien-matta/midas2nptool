@@ -46,6 +46,11 @@ branches:
   only:
     - master
 
+addons:
+  apt:
+    packages:
+    - ninja-build
+
 #notifications:
   email:
     recipients:
