@@ -21,7 +21,6 @@ before_install:
 install:
 
 script:
-  - cmake --version
   - cd midas2nptool 
   - cmake ./
   - make install 
@@ -33,8 +32,8 @@ branches:
     - midas2nptool
 
 #notifications:
-#  email:
-#    recipients:
-#      - mhd.moukaddam@gmail.com
-#    on_success: change
-#    on_failure: always
+  email:
+    recipients:
+      - mhd.moukaddam@gmail.com
+    on_success: change
+    on_failure: always
