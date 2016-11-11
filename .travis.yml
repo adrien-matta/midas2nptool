@@ -16,13 +16,13 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf nptool_root6_geant10.tar.gz; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/nptool/nptool.sh; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd ~/nptool/NPLib/scripts; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./RootLogon.sh && cd; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./RootLogon.sh; fi
 
   # Dumping stuff for check
   - root-config --version
 
-  #- cd 
-  #- git clone https://github.com/moukaddam/midas2nptool
+  - cd 
+  - git clone https://github.com/moukaddam/midas2nptool
 
 install:
 
