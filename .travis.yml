@@ -37,7 +37,7 @@ install:
 
 script:
   - cd
-  - git clone https://github.com/moukaddam/midas2nptool 
+  - git clone https://github.com/adrien-matta/midas2nptool
   - cd ~/midas2nptool 
   - cmake ./
   - make install 
@@ -54,8 +54,8 @@ addons:
     - ninja-build
 
 #notifications:
-  email:
-    recipients:
-      - mhd.moukaddam@gmail.com
-    on_success: change
-    on_failure: always
+#  email:
+#    recipients:
+#      - mhd.moukaddam@gmail.com
+#    on_success: change
+#    on_failure: always
