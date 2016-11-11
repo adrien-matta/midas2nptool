@@ -14,8 +14,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq install root-system; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd && wget https://dl.dropboxusercontent.com/u/32340790/travis/nptool_root6_geant10.tar.gz; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf nptool_root6_geant10.tar.gz; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/nptool_root6_geant10/nptool.sh; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd ~/nptool_root6_geant10/NPLib/scripts; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/nptool/nptool.sh; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd ~/nptool/NPLib/scripts; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./RootLogon.sh; fi
 
   # Dumping stuff for check
