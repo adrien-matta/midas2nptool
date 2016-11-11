@@ -36,6 +36,8 @@ before_install:
 install:
 
 script:
+  - cd
+  - git clone https://github.com/moukaddam/midas2nptool 
   - cd ~/midas2nptool 
   - cmake ./
   - make install 
