@@ -12,22 +12,29 @@ before_install:
   # Linux
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ trusty main universe"; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq install root-system; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd && wget https://dl.dropboxusercontent.com/u/32340790/travis/nptool_root6_geant10.tar.gz; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf nptool_root6_geant10.tar.gz; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/nptool/nptool.sh; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd ~/nptool/NPLib/scripts; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./RootLogon.sh; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cd && wget https://www.dropbox.com/s/8hxjkd6twdsv5fi/geant4_install_new.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -xf geant4_install_new.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/geant4_install/share/Geant4-10.1.2/geant4make/geant4make.sh; fi
 
   # Dumping stuff for check
   - root-config --version
+  - cmake --version
 
+  # Install  NPTool and NPData (needed to run examples suite)
   - cd 
-  - git clone https://github.com/moukaddam/midas2nptool
+  - git clone https://github.com/adrien-matta/nptool
+  - cd $NPTOOL
+  - git clone https://github.com/adrien-matta/NPData 
+  - cd $NPTOOL/NPLib 
+  - cmake -GNinja ./
+  - ninja install 
+  - ./scripts/RootLogon.sh 
+  - ./scripts/test/all.sh
+
 
 install:
 
 script:
-  - cmake --version
   - cd ~/midas2nptool 
   - cmake ./
   - make install 
