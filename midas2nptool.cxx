@@ -7,9 +7,14 @@ using namespace std;
 
 int main(int argc, char** argv){
   /// Parsing argument
-  if(argc !=5){
+  if(argc == 2 && strcmp(argv[1],"-h")==0){
+    cout << "midas2nptool data converter, usage is:" << endl; 
+    cout << "\t midas2nptool configuration.txt midasfile.dat rootfile.root treename" << endl;
+    return 0 ;
+  }
+  else if(argc !=5){
     cout << "Error: wrong number of argument, usages is:" << endl;
-    cout << "midas2nptool configuration.txt midasfile.dat rootfile.root treename" << endl;
+    cout << "\t midas2nptool configuration.txt midasfile.dat rootfile.root treename" << endl;
     exit(1);
   }
 

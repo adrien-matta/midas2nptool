@@ -32,8 +32,10 @@ script:
   - cd
   - git clone https://github.com/adrien-matta/midas2nptool
   - cd ~/midas2nptool 
+  - source midas2nptool.sh
   - cmake -GNinja ./
-  - make install 
+  - ninja install
+  - midas2nptool -h
 
 after_success:
 
