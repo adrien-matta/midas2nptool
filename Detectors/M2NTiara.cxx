@@ -94,10 +94,7 @@ if(token.compare(0,1,"B")==0){ // Barrel
     // Extract Strip Number
     string s_str = token.substr(6,2);
     int s = atoi(s_str.c_str());
-<<<<<<< HEAD
 //cout << token.substr(6,2) << " " << s << endl;
-=======
->>>>>>> upstream/master
 
     // Energy or Time
     if(token.compare(9,1,"T")==0)
