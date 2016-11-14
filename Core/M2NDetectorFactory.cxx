@@ -27,16 +27,16 @@ M2N::DetectorFactory* M2N::DetectorFactory::getInstance(){
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorFactory::ReadClassList(std::string FileList){
-    std::ifstream InFile(FileList.c_str());
+  std::ifstream InFile(FileList.c_str());
 
-    if(!InFile.is_open()){
-      cout << "ERROR: Detector Class List file " << FileList << " Not found" << endl;
-      exit(1);
-    }
+  if(!InFile.is_open()){
+    cout << "ERROR: Detector Class List file " << FileList << " Not found" << endl;
+    exit(1);
+  }
 
-    string Token, LibName;
-    while(InFile >> Token >> LibName)
-      m_TokenLib[Token] = LibName; 
+  string Token, LibName;
+  while(InFile >> Token >> LibName)
+    m_TokenLib[Token] = LibName; 
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorFactory::CreateClassList(std::string FileList){
@@ -61,17 +61,16 @@ M2N::VDetector* M2N::DetectorFactory::Construct(std::string Token){
     std::string libName = path+"/lib/"+m_TokenLib[Token];
     dlopen(libName.c_str(),RTLD_NOW | RTLD_GLOBAL);
     char* LibError = dlerror();
-	if(m_Construct.find(Token)!=m_Construct.end())
-      		return  m_Construct[Token]();
-  
+    if(m_Construct.find(Token)!=m_Construct.end())
+      return  m_Construct[Token]();
+
     else{
-      
       std::cout << "Warning: Detector with Token " << Token << " has no Constructor or no Library" << std::endl;
       if(LibError){
         std::cout << "Library loading fails with error: " << std::endl;
         std::cout << LibError << std::endl << std::endl;
       }
-      
+
       return NULL;
     }
   }
@@ -92,12 +91,12 @@ void M2N::DetectorFactory::AddToken(std::string Token, std::string LibName){
   if((pos=LibName.find(remword))!=std::string::npos){
     LibName.swap(LibName.erase(pos,remword.length()));
   }
-  
+
   remword = "M2N";
   if((pos=LibName.find(remword))!=std::string::npos){
     LibName.swap(LibName.erase(pos,remword.length()));
   }
-  
+
   remword = ".so";
   if((pos=LibName.find(remword))!=std::string::npos){
     LibName.swap(LibName.erase(pos,remword.length()));
