@@ -86,8 +86,9 @@ void M2N::DetectorManager::ReadConfiguration(string path){
       if(token == "NAME")
         m_TreeName = buffer;
     }
-    else if(key.compare(0,0,"%")!=0){
-      //do nothing, its a comment
+ 
+   else if(key.compare(0,1,"%")==0){
+      infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n')  ;
     }
 
     else{
@@ -103,13 +104,17 @@ void M2N::DetectorManager::ReadConfiguration(string path){
   if(m_TDCbase!=-1){
     cout << "**** TDC setting : Base = " << m_TDCbase << " Offset = " << m_TDCoffset << " ****" << endl; 
   }
-
-
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
-    if(key.compare(0,0,"%")!=0){
+    if(key.compare(0,1,"%")!=0){
       cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
       
       M2N::VDetector* Det = GetDetector(detector); 
+      if(!Det){
+        cout << endl ;
+        cout << "ERROR: Detector " << detector << " is not supported " << endl;
+        exit(1);
+      }
+
       int address=-1;
       if(key == "ADC")
         address = ADCChannelToAddress(module,channel);
@@ -117,9 +122,6 @@ void M2N::DetectorManager::ReadConfiguration(string path){
       else if(key == "TDC")
         address = TDCChannelToAddress(module,channel);
 
-      else if(key.compare(0,0,"%")!=0){
-        // do nothing, comment
-      }
       else{
         cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
         exit(1);

@@ -84,7 +84,6 @@ void M2N::Tiara::Fill(string& token, double value){
     string s_str = token.substr(6,2);
     int s = atoi(s_str.c_str());
 
-
     // Energy or Time
     if(token.compare(9,1,"T")==0)
       energy = false;
@@ -101,9 +100,6 @@ void M2N::Tiara::Fill(string& token, double value){
       else
         m_Hyball->SetSectorT(w,s,value);
     }
-
-
-
   }  
 }
 ////////////////////////////////////////////////////////////////////////////////
