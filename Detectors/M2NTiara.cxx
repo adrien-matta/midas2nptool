@@ -10,6 +10,8 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////
 M2N::Tiara::Tiara(){
   m_Barrel= new TTiaraBarrelData();
+  m_Hyball= new TTiaraHyballData();
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,28 +20,28 @@ M2N::Tiara::~Tiara(){
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::Clear(){
   m_Barrel->Clear();
-
+  m_Hyball->Clear();
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::Fill(string& token, double value){
-  if(token.compare(0,0,"B")){ // Barrel
+  if(token.compare(0,1,"B")==0){ // Barrel
     bool front = true;
     bool up = true;
     bool energy = true;
-    
+
     // Extract Barrel Number
     string b_str = token.substr(1,2);
     int b = atoi(b_str.c_str()); 
 
-    // Extract String Number
+    // Extract Strip Number
     string s_str = token.substr(6,2);
     int s = 0 ; 
     if(s_str!="XX")
       s = atoi(s_str.c_str()); 
     else
       front = false;
-   
-     if(token.compare(5,2,"DW")==0)
+
+    if(token.compare(5,2,"DW")==0)
       up = false;
 
     // Energy or Time
@@ -70,15 +72,47 @@ void M2N::Tiara::Fill(string& token, double value){
     }
 
   }
-  
-  else if(token.compare(0,0,"H")){ // Hyball
-    // to do
+
+  else if(token.compare(0,1,"H")==0){ // Hyball
+    bool front = true;
+    bool energy = true;
+    // Extract Wedge Number
+    string w_str = token.substr(1,2);
+    int w = atoi(w_str.c_str()); 
+
+    // Extract Strip Number
+    string s_str = token.substr(6,2);
+    int s = atoi(s_str.c_str());
+
+
+    // Energy or Time
+    if(token.compare(9,1,"T")==0)
+      energy = false;
+
+    if(energy){
+      if(front)
+        m_Hyball->SetRingE(w,s,value);
+      else
+        m_Hyball->SetSectorE(w,s,value);
+    }
+    else{
+      if(front)
+        m_Hyball->SetRingT(w,s,value);
+      else
+        m_Hyball->SetSectorT(w,s,value);
+    }
+
+
+
   }  
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::InitBranch(){
   // Barrel
   M2N::RootOutput::getInstance()->GetTree()->Branch("TiaraBarrel","TTiaraBarrelData",&m_Barrel);
+  // Hyball
+  M2N::RootOutput::getInstance()->GetTree()->Branch("TiaraHyball","TTiaraHyballData",&m_Hyball);
+
 
 };
 

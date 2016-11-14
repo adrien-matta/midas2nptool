@@ -12,6 +12,7 @@ using namespace std;
 
 // NPTOOL
 #include"TTiaraBarrelData.h"
+#include"TTiaraHyballData.h"
 
 namespace M2N{
   class Tiara : public M2N::VDetector{
@@ -27,6 +28,7 @@ namespace M2N{
 
     private:
       TTiaraBarrelData* m_Barrel;
+      TTiaraHyballData* m_Hyball;
 
     public: // Static constructor to be passed to the Detector Factory
       static M2N::VDetector* Construct();

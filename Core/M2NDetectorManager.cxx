@@ -117,6 +117,9 @@ void M2N::DetectorManager::ReadConfiguration(string path){
       else if(key == "TDC")
         address = TDCChannelToAddress(module,channel);
 
+      else if(key.compare(0,0,"%")!=0){
+        // do nothing, comment
+      }
       else{
         cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
         exit(1);
