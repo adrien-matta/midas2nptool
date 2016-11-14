@@ -27,8 +27,9 @@ M2N::DetectorManager::~DetectorManager(){
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::Fill(int address, int value){
   //cout << address << " " << value << endl;
-  if(m_address.find(address)!=m_address.end())
-    m_address[address]->Fill(m_token[address],value); 
+  if(m_address.find(address)!=m_address.end()){
+    m_address[address]->Fill(m_token[address],value);
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::DetectorManager::InitBranch(){
@@ -106,7 +107,6 @@ void M2N::DetectorManager::ReadConfiguration(string path){
 
 
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
-      cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
     if(key.compare(0,0,"%")!=0){
       cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
       
