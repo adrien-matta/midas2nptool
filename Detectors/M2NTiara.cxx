@@ -24,7 +24,7 @@ void M2N::Tiara::Clear(){
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::Tiara::Fill(string& token, double value){
-  if(token.compare(0,1,"B")==0){ // Barrel
+if(token.compare(0,1,"B")==0){ // Barrel
     bool front = true;
     bool up = true;
     bool energy = true;
@@ -33,16 +33,20 @@ void M2N::Tiara::Fill(string& token, double value){
     string b_str = token.substr(1,2);
     int b = atoi(b_str.c_str()); 
 
-    // Extract Strip Number
+	// Extraxt Back or front 
+    if(token.compare(4,2,"BK")==0)
+      front = false;
+	else // Extract Up or down on same strip 
+		if(token.compare(4,2,"DW")==0)
+		  up = false;
+    
+	// Extract Strip Number
     string s_str = token.substr(6,2);
     int s = 0 ; 
-    if(s_str!="XX")
-      s = atoi(s_str.c_str()); 
-    else
-      front = false;
-
-    if(token.compare(5,2,"DW")==0)
-      up = false;
+    //if(s_str!="XX")
+      s = atoi(s_str.c_str());
+    //else
+      //front = false;
 
     // Energy or Time
     if(token.compare(9,1,"T")==0)
@@ -76,18 +80,26 @@ void M2N::Tiara::Fill(string& token, double value){
   else if(token.compare(0,1,"H")==0){ // Hyball
     bool front = true;
     bool energy = true;
+//cout << token << endl; cin.get(); 
     // Extract Wedge Number
     string w_str = token.substr(1,2);
     int w = atoi(w_str.c_str()); 
+//cout << token.substr(1,2) << endl; 
 
+    //Extract Ring or Sector
+    if(token.compare(4,2,"SC")==0)
+      front = false;
+//cout << token.substr(4,2) << endl;
+ 
     // Extract Strip Number
     string s_str = token.substr(6,2);
     int s = atoi(s_str.c_str());
-
+//cout << token.substr(6,2) << " " << s << endl;
 
     // Energy or Time
     if(token.compare(9,1,"T")==0)
       energy = false;
+//cout << token.substr(9,1) << endl;
 
     if(energy){
       if(front)
