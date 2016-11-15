@@ -1,23 +1,38 @@
 # midas2nptool
-A conversion package for data file from MIDAS (Daresbury) to nptool
+A framework for convertion of MIDAS (Daresbury) data file to nptool ROOT tree. For any question, contact me at matta@lpccaen.in2p3.fr
 
-Pre-requisites: 
-NPTool 
-checkout http://nptool.org/manual/ for installation 
+## installation:
+The only prerequisit is to have root and nptool installed and configured first.
 
-Install:
-$ cd /path/to/the/packages/diretory
-$ git clone https://github.com/adrien-matta/midas2nptool
-$ cd ~/midas2nptool 
-$ source midas2nptool.sh
+    > git clone http://github.com/adrien-matta/midas2nptool
+    > cd midas2nptool
+    > cmake ./
+    > make install
 
-from here two ways to build
-$ cmake -GNinja ./
-$ make -jn install (e.g. make -j2 install, n is number of cores)
+Don't forget to source path/to/midas2nptool/midas2nptool.sh from your bashrc file or equivalent.
 
-or if google Ninja is installed (faster build): 
-$ cmake -GNinja ./
-$ ninja install
+## basic running:
+To run the package:
 
-for how to execute
-$ midas2nptool -h
+    - Once your source midas2nptool.sh the executable are available from any place
+
+    - to show the help :
+            > midas2nptool -h
+
+    - to convert a file:
+        midas2nptool configuration.txt path/to/midasfile path/to/rootfile.root TreeName
+
+    - to convert a folder:
+        m2n_folder configuration,txt path/to/midasfolder/ parth/to/root/folder/ TreeName
+
+NB : m2n_folder skip file that are already converted, and unzip them if necessary.
+
+## Running a quick test:
+You can test the code by running the programme on the provided sample files:
+  
+    > cd $M2N 
+    > midas2nptool  test.txt sample/R40_0  R40_0.root TestTree
+    > mkdir root
+    > m2n_folder test.txt sample/ root/ TestTree
+
+Have Fun!
