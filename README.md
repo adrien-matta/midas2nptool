@@ -35,7 +35,8 @@ NB : m2n\_folder skip file that are already converted, and unzip them if necessa
 
 ## Running a quick test:
 You can test the code by running the programme on the provided sample files:
-  > cd $M2N
+  
+  > cd $M2N 
   > midas2nptool  test.txt sample/R40\_0  R40\_0.root TestTree
   > mkdir root
   > m2n\_folder test.txt sample/ root/ TestTree
