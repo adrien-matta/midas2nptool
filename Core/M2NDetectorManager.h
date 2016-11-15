@@ -39,11 +39,6 @@ namespace M2N{
     private: // tdc
       int m_TDCbase;
       int m_TDCoffset;
-
-    private: // Tree
-      string m_TreeName;
   };
-
-
 }
 #endif
