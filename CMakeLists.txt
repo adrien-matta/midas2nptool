@@ -72,3 +72,5 @@ add_executable(midas2nptool midas2nptool.cxx)
 target_Link_libraries(midas2nptool ${ROOT_LIBRARIES} M2NCore)
 
 install(PROGRAMS midas2nptool DESTINATION ${CMAKE_BINARY_OUTPUT_DIRECTORY})
+configure_file(scripts/m2n_folder.sh "${CMAKE_BINARY_OUTPUT_DIRECTORY}/m2n_folder" @ONLY)
+

@@ -11,7 +11,6 @@ using namespace std;
 M2N::Tiara::Tiara(){
   m_Barrel= new TTiaraBarrelData();
   m_Hyball= new TTiaraHyballData();
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
