@@ -23,16 +23,16 @@ To run the package:
         midas2nptool configuration.txt path/to/midasfile path/to/rootfile.root TreeName
 
     - to convert a folder:
-        m2n\_folder configuration,txt path/to/midasfolder/ parth/to/root/folder/ TreeName
+        m2n_folder configuration,txt path/to/midasfolder/ parth/to/root/folder/ TreeName
 
-NB : m2n\_folder skip file that are already converted, and unzip them if necessary.
+NB : m2n_folder skip file that are already converted, and unzip them if necessary.
 
 ## Running a quick test:
 You can test the code by running the programme on the provided sample files:
   
     > cd $M2N 
-    > midas2nptool  test.txt sample/R40\_0  R40\_0.root TestTree
+    > midas2nptool  test.txt sample/R40_0  R40_0.root TestTree
     > mkdir root
-    > m2n\_folder test.txt sample/ root/ TestTree
+    > m2n_folder test.txt sample/ root/ TestTree
 
 Have Fun!
