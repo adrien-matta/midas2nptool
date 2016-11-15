@@ -124,7 +124,6 @@ void M2N::MidasInput::TreatFile(){
   cout << "Treated blocks :" << blocks << endl;
 
   fin.close();
-  m_HitPattern->Write();
 }
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::MidasInput::SimulateTreat(int event, int cmin , int cmax, int vmin,int vmax){
