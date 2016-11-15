@@ -16,6 +16,7 @@ M2N::MidasInput::MidasInput(){
   m_DetectorManager=0;
   m_FileName="not-set";
   m_Tree= M2N::RootOutput::getInstance()->GetTree();
+  m_HitPattern = new TH1F("HitPattern","Hit Pattern",5000,0,5000);
 }
 ////////////////////////////////////////////////////////////////////////////////
 M2N::MidasInput::~MidasInput(){
@@ -97,6 +98,7 @@ void M2N::MidasInput::TreatFile(){
               if(*half>0 && *half<4095){
                 //cout<< "Inside TreatFile()" <<address << " " << *half<<endl;
                 m_DetectorManager->Fill(address,*half);
+                m_HitPattern->Fill(address);
               }
             }
             else if (group == 31){
@@ -107,11 +109,12 @@ void M2N::MidasInput::TreatFile(){
           events++;
           evtNum=events-1;
           m_Tree->Fill();
+          m_DetectorManager->Clear();
           half=end_event;
         }
       }
 
-      if(!(blocks%500)){
+      if(!(blocks%100)){
         cout << "\rProcessing Block:  " << blocks;
         cout.flush();
       }
@@ -119,7 +122,7 @@ void M2N::MidasInput::TreatFile(){
   }
 
   cout << "\r----------------------Processed All Blocks-----------------------" << endl;
-  cout << "blocks " << blocks << endl;
+  cout << "Treated blocks :" << blocks << endl;
 
   fin.close();
 }

@@ -3,6 +3,11 @@
 
 // M2N
 #include"M2NDetectorManager.h"
+
+// Root
+#include"TTree.h"
+#include"TH1.h"
+
 // STL
 #include<string>
 using namespace std;
@@ -24,10 +29,10 @@ namespace M2N{
     public: // Generate tag to simulate a TreatFile 
       void SimulateTreat(int event, int cmin=0 , int cmax=65536, int vmin=0 , int vmax=65536);
 
-
     private: 
       M2N::DetectorManager* m_DetectorManager;
       TTree* m_Tree;
+      TH1* m_HitPattern;
       string m_FileName;
   };
 }

@@ -13,7 +13,6 @@ M2N::DetectorManager::DetectorManager(){
   m_ADCoffset = -1 ;
   m_TDCbase = -1 ;
   m_TDCoffset = -1 ;
-  m_TreeName = "M2NTree";
   M2N::DetectorFactory::getInstance()->ReadClassList("ClassList.txt");
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -83,12 +82,6 @@ void M2N::DetectorManager::ReadConfiguration(string path){
         m_TDCoffset = value;
     }
 
-    else if(key == "TREE"){
-      infile >> token >> buffer;
-      if(token == "NAME")
-        m_TreeName = buffer;
-    }
- 
    else if(key.compare(0,1,"%")==0){
       infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n')  ;
     }

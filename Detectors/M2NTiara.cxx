@@ -80,26 +80,21 @@ if(token.compare(0,1,"B")==0){ // Barrel
   else if(token.compare(0,1,"H")==0){ // Hyball
     bool front = true;
     bool energy = true;
-//cout << token << endl; cin.get(); 
     // Extract Wedge Number
     string w_str = token.substr(1,2);
     int w = atoi(w_str.c_str()); 
-//cout << token.substr(1,2) << endl; 
 
     //Extract Ring or Sector
     if(token.compare(4,2,"SC")==0)
       front = false;
-//cout << token.substr(4,2) << endl;
  
     // Extract Strip Number
     string s_str = token.substr(6,2);
     int s = atoi(s_str.c_str());
-//cout << token.substr(6,2) << " " << s << endl;
 
     // Energy or Time
     if(token.compare(9,1,"T")==0)
       energy = false;
-//cout << token.substr(9,1) << endl;
 
     if(energy){
       if(front)
