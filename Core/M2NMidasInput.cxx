@@ -106,11 +106,12 @@ void M2N::MidasInput::TreatFile(){
           events++;
           evtNum=events-1;
           m_Tree->Fill();
+          m_DetectorManager->Clear();
           half=end_event;
         }
       }
 
-      if(!(blocks%500)){
+      if(!(blocks%1)){
         cout << "\rProcessing Block:  " << blocks;
         cout.flush();
       }
