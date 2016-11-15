@@ -26,7 +26,12 @@ void M2N::GeTAMU::Fill(string& token, double value){
     string clv_str = token.substr(1,2);
     int clv = atoi(clv_str.c_str()); 
 
-    // Extract Segment Number
+    // Check if core or segment
+    bool core = true;
+    if(token.compare(10,16,"SEGMENT"))
+      core = false;
+
+    // Extract Segment/Cristal Number
     string seg_str = token.substr(17,2);
     int seg = atoi(seg_str.c_str()); 
 
@@ -35,8 +40,14 @@ void M2N::GeTAMU::Fill(string& token, double value){
     if(token.compare(20,1,"T")==0)
       energy = false;
 
-    
-
+    if(core){
+      if(energy)
+        m_Data->SetCore(clv,seg,value,-1000);
+    }
+    else{
+      if(energy)
+        m_Data->SetSegment(clv,seg,value,-1000);
+    } 
   }
 }
 ////////////////////////////////////////////////////////////////////////////////
