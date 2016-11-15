@@ -95,6 +95,7 @@ void M2N::MidasInput::TreatFile(){
               address = 32 * (group - 1) + item;
               ++half;
               if(*half>0 && *half<4095){
+                //cout<< "Inside TreatFile()" <<address << " " << *half<<endl;
                 m_DetectorManager->Fill(address,*half);
               }
             }
