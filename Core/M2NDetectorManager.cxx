@@ -9,11 +9,13 @@ using namespace std;
 #include"M2NDetectorFactory.h"
 ////////////////////////////////////////////////////////////////////////////////
 M2N::DetectorManager::DetectorManager(){
-  m_ADCbase = -1 ;
-  m_ADCoffset = -1 ;
-  m_TDCbase = -1 ;
-  m_TDCoffset = -1 ;
-  M2N::DetectorFactory::getInstance()->ReadClassList("ClassList.txt");
+  m_ADCbase = -1;
+  m_ADCoffset = -1;
+  m_TDCbase = -1;
+  m_TDCoffset = -1;
+  std::string path = getenv("M2N"); 
+  std::string fileName = path+"/ClassList.txt";
+  M2N::DetectorFactory::getInstance()->ReadClassList(fileName);
 }
 ////////////////////////////////////////////////////////////////////////////////
 M2N::DetectorManager::~DetectorManager(){
