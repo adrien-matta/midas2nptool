@@ -27,7 +27,7 @@ M2N::DetectorManager::~DetectorManager(){
 
 }
 ////////////////////////////////////////////////////////////////////////////////
-void M2N::DetectorManager::Fill(int address, int value){
+void M2N::DetectorManager::Fill(unsigned short int address, unsigned short int value){
   //cout << address << " " << value << endl;
   if(m_address.find(address)!=m_address.end()){
     m_address[address]->Fill(m_token[address],value);

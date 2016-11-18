@@ -7,4 +7,6 @@ lib/*
 include/*
 install_manifest.txt
 midas2nptool
+*.root
 *.swp
+.*

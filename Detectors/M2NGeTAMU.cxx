@@ -23,16 +23,16 @@ void M2N::GeTAMU::Clear(){
 void M2N::GeTAMU::Fill(string& token, double value){
   if(token.compare(0,6,"CLOVER")==0){
     // Extract Clover Number
-    string clv_str = token.substr(1,2);
+    string clv_str = token.substr(6,2);
     int clv = atoi(clv_str.c_str()); 
 
     // Check if core or segment
     bool core = true;
-    if(token.compare(10,16,"SEGMENT"))
+    if(token.compare(9,7,"SEGMENT"))
       core = false;
 
     // Extract Segment/Cristal Number
-    string seg_str = token.substr(17,2);
+    string seg_str = token.substr(16,2);
     int seg = atoi(seg_str.c_str()); 
 
     // Check energy or time
@@ -43,6 +43,7 @@ void M2N::GeTAMU::Fill(string& token, double value){
     if(core){
       if(energy)
         m_Data->SetCore(clv,seg,value,-1000);
+      
     }
     else{
       if(energy)
