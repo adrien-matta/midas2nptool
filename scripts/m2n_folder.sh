@@ -6,7 +6,6 @@ else
   do
     filename=$(basename "$midas")
     extension="${filename##*.}"
-    printf "$extension"
     check_gz="false"
     if [ $extension == "gz" ]; then
       check_gz="true"
