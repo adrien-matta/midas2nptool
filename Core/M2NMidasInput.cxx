@@ -202,11 +202,18 @@ bool M2N::MidasInput::ReadBlock(ifstream& fin){
 ////////////////////////////////////////////////////////////////////////////////
 void M2N::MidasInput::TreatFile(){
 
-  cout << "\r------------------------Starting Process-------------------------" << endl;
-
+  
   // Minor adaptation of Raw_Tree.C macro from University of York group 
   ifstream fin;
   fin.open(m_FileName,ifstream::binary);
+  if(!fin.is_open()){
+    cout << "ERROR: fail to open file " << m_FileName << endl;
+    exit(1);
+  }
+  else{
+    cout << "**** Treating MIDAS file " << m_FileName << " ****" << endl;
+    cout << "\r------------------------Starting Process-------------------------" << endl;
+  }
   while(ReadBlock(fin)){
     // Read all the block. ReadBlock return false on eof
   }
