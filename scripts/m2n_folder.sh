@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 if [ $# -ne 4 ]; then
   printf "Wrong number of argument: usage is m2n_folder configuration.txt path/to/midas/ path/to/root treename\n"
 else
@@ -6,7 +7,6 @@ else
   do
     filename=$(basename "$midas")
     extension="${filename##*.}"
-    printf "$extension"
     check_gz="false"
     if [ $extension == "gz" ]; then
       check_gz="true"

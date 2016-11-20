@@ -103,7 +103,7 @@ void M2N::DetectorManager::ReadConfiguration(string path){
   }
   while(infile >> key >> module >> buffer >> channel >> detector >> token){
     if(key.compare(0,1,"%")!=0){
-      cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
+      //cout << key << " " << module<< " " << buffer << " " << channel << " " << detector << " " << token << " -> ";
       
       M2N::VDetector* Det = GetDetector(detector); 
       if(!Det){
@@ -123,7 +123,7 @@ void M2N::DetectorManager::ReadConfiguration(string path){
         cout << "ERROR : Incorrect key \"" << key << "\" given to Detector Manager. Valid value are ADC and TDC " << endl;
         exit(1);
       }
-      cout << address << endl; 
+      //cout << address << endl; 
       m_address[address] = Det;
       m_token[address] = token;
     }
