@@ -52,8 +52,9 @@ void M2N::DetectorFactory::CreateClassList(std::string FileList){
 ////////////////////////////////////////////////////////////////////////////////
 M2N::VDetector* M2N::DetectorFactory::Construct(std::string Token){
   std::map<std::string,ClassDetectorFactoryFn>::iterator it;
-  if(m_Construct.find(Token)!=m_Construct.end())
+  if(m_Construct.find(Token)!=m_Construct.end()){
     return  m_Construct[Token]();
+  }
 
   else if( m_TokenLib.find(Token)!=m_TokenLib.end()){
     // Add absolute path to library name
@@ -63,7 +64,6 @@ M2N::VDetector* M2N::DetectorFactory::Construct(std::string Token){
     char* LibError = dlerror();
     if(m_Construct.find(Token)!=m_Construct.end())
       return  m_Construct[Token]();
-
     else{
       std::cout << "Warning: Detector with Token " << Token << " has no Constructor or no Library" << std::endl;
       if(LibError){

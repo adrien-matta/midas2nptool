@@ -22,7 +22,7 @@ before_install:
   - git clone https://github.com/adrien-matta/nptool
   - source ~/nptool/nptool.sh
   - cd $NPTOOL/NPLib 
-  - cmake -GNinja ./ -DETLIST="Tiara GeTAMU W1" 
+  - cmake -GNinja ./ -DETLIST="Tiara GeTAMU FPDTamu W1" 
   - ninja install 
   - ./scripts/RootLogon.sh 
 
