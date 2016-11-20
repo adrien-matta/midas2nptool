@@ -37,7 +37,7 @@ void M2N::GeTAMU::Fill(string& token, double value){
 
     // Check energy or time
     bool energy = true;
-    if(token.compare(20,1,"T")==0)
+    if(token.compare(19,1,"T")==0)
       energy = false;
 
     if(core){
