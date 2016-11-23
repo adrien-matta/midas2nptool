@@ -14,10 +14,13 @@ cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 # This suppress the Up-to-Date message of file installed for cmake 3.1 and above
 set(CMAKE_INSTALL_MESSAGE LAZY) 
 
+# Set the Search path for library
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 # Finding NPLib
 find_package(NPLib)
 include(${NPLib_USE_FILE})
-
+link_directories(${NPLIB}/lib)
 configure_file(Core/M2NVersion.h.in Core/M2NVersion.h @ONLY) 
 
 # look for Root
@@ -67,10 +70,11 @@ include_directories("Core")
 # compilation
 add_subdirectory("Core") 
 add_subdirectory("Detectors") 
+add_subdirectory("Utility") 
 
 add_executable(midas2nptool midas2nptool.cxx)
 target_Link_libraries(midas2nptool ${ROOT_LIBRARIES} M2NCore)
 
 install(PROGRAMS midas2nptool DESTINATION ${CMAKE_BINARY_OUTPUT_DIRECTORY})
 configure_file(scripts/m2n_folder.sh "${CMAKE_BINARY_OUTPUT_DIRECTORY}/m2n_folder" @ONLY)
-
+install(SCRIPT ./scripts/post_install.cmake)

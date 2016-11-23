@@ -1,0 +1,1 @@
+execute_process(COMMAND m2n_installer)

@@ -10,3 +10,5 @@ midas2nptool
 *.root
 *.swp
 .*
+ClassList.txt
+Utility/m2n_installer 

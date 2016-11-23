@@ -109,6 +109,12 @@ void M2N::DetectorFactory::AddToken(std::string Token, std::string LibName){
 
 
   // Create the full name:
-  LibName = "libM2N"+LibName + ".so";
+  #ifdef __APPLE__
+  std::string ext = ".dylib";
+  #else
+  std::string ext = ".so" ;
+  #endif
+
+  LibName = "libM2N"+LibName + ext;
   m_TokenLib[Token] = LibName;
 }

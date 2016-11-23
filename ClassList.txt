@@ -1,3 +1,0 @@
-Tiara libM2NTiara.so
-GeTAMU libM2NGeTAMU.so
-FpdTAMU libM2NFpdTAMU.so

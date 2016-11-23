@@ -28,7 +28,7 @@ void M2N::GeTAMU::Fill(string& token, double value){
 
     // Check if core or segment
     bool core = true;
-    if(token.compare(9,7,"SEGMENT"))
+    if(token.compare(9,7,"SEGMENT")==0)
       core = false;
 
     // Extract Segment/Cristal Number
@@ -43,7 +43,6 @@ void M2N::GeTAMU::Fill(string& token, double value){
     if(core){
       if(energy)
         m_Data->SetCore(clv,seg,value,-1000);
-      
     }
     else{
       if(energy)
