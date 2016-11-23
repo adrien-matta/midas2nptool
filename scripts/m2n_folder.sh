@@ -6,26 +6,27 @@ else
   for midas in $2*
   do
     filename=$(basename "$midas")
-    extension="${filename##*.}"
-    check_gz="false"
-    if [ $extension == "gz" ]; then
-      check_gz="true"
-      printf "\n**** Decompressing file $filename ****\n"
-      gzip -d $2/$filename
-      filename="${filename%.*}"
-    else
-      filename="${filename%.*}"
-    fi
-
-    root="$3$filename.root"
+    froot="${filename%.*}"
+    root="$3$froot.root"
     if [ -f $root ] ; then
       printf "\n**** NOTE : File $root already exist, skipping conversion ****\n"
     else
-        midas2nptool $1 $2$filename $root $4
-        if [ $check_gz == "true" ]; then
-          printf "\n**** Recompressing file $filename ****\n"
-          gzip $2/$filename
-        fi
+      extension="${filename##*.}"
+      check_gz="false"
+      if [ $extension == "gz" ]; then
+        check_gz="true"
+        printf "\n**** Decompressing file $filename ****\n"
+        gzip -d $2/$filename
+        filename="${filename%.*}"
+      else
+        filename="${filename%.*}"
+      fi
+
+      midas2nptool $1 $2$filename $root $4
+      if [ $check_gz == "true" ]; then
+        printf "\n**** Recompressing file $filename ****\n"
+        gzip $2/$filename
+      fi
     fi
   done
 fi
