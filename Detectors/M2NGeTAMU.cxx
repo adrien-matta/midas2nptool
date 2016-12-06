@@ -42,11 +42,15 @@ void M2N::GeTAMU::Fill(string& token, double value){
 
     if(core){
       if(energy)
-        m_Data->SetCore(clv,seg,value,-1000);
+        m_Data->SetCoreE(clv,seg,value);
+      else
+        m_Data->SetCoreT(clv,seg,value);
     }
     else{
       if(energy)
-        m_Data->SetSegment(clv,seg,value,-1000);
+        m_Data->SetSegmentE(clv,seg,value);
+      else
+        m_Data->SetSegmentT(clv,seg,value);        
     } 
   }
 }
