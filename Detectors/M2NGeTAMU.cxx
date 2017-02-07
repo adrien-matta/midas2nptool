@@ -40,14 +40,25 @@ void M2N::GeTAMU::Fill(string& token, double value){
     if(token.compare(19,1,"T")==0)
       energy = false;
 
+    // Check if low gain
+    bool energyLG = false;
+    if(token.size()>=23 && token.compare(21,2,"LG")==0)
+      energyLG = true;
+
     if(core){
       if(energy)
+		if(energyLG)
+        m_Data->SetCoreELowGain(clv,seg,value);
+	  	else
         m_Data->SetCoreE(clv,seg,value);
       else
         m_Data->SetCoreT(clv,seg,value);
     }
     else{
       if(energy)
+		if (energyLG)
+        m_Data->SetSegmentELowGain(clv,seg,value);
+		else
         m_Data->SetSegmentE(clv,seg,value);
       else
         m_Data->SetSegmentT(clv,seg,value);        
