@@ -23,8 +23,8 @@ before_install:
   - git clone https://github.com/adrien-matta/nptool
   - source ~/nptool/nptool.sh
   - cd $NPTOOL/NPLib 
-  - cmake ./ -DETLIST="Tiara GeTAMU FPDTamu" 
-  - make install 
+  - cmake -GNinja ./ -DETLIST="Tiara GeTAMU FPDTamu" 
+  - ninja install 
   - ./scripts/RootLogon.sh 
 
 install:
@@ -34,9 +34,9 @@ script:
   - git clone https://github.com/adrien-matta/midas2nptool
   - cd ~/midas2nptool 
   - source midas2nptool.sh
-  - cmake ./
-  - make install
-  - m2n_folder t40.txt sample/ ./ T40Data
+  - cmake -GNinja ./
+  - ninja install 
+  - m2n_folder t40_lowgain.txt sample/ .sampleOP/ T40Tree
 
 after_success:
 
