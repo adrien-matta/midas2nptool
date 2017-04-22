@@ -85,24 +85,28 @@ void M2N::FpdTAMU::Fill(string& token, double value){
 
   if(token.compare(0,5,"MICRO")==0){
 
+    // Extract Detector number 1->n 
+    string det_str = token.substr(5,1);
+    int det = atoi(det_str.c_str()); 
+    
     // Extract Row 0->n = upstream -> downstream
-    string row_str = token.substr(7,1);
+    string row_str = token.substr(8,1);
     int row = atoi(row_str.c_str()); 
-
+    
     // Extract Col 0->n = Leftmost -> Rightmost (looking downstream from the top)
-    string col_str = token.substr(10,1);
+    string col_str = token.substr(11,1);
     int col = atoi(col_str.c_str()); 
-
+    
     // Check energy or time
     bool energy = true;
-    if(token.compare(12,1,"T")==0) 
+    if(token.compare(13,1,"T")==0) 
       energy = false;
 
     if(energy){
-        m_Data->Set_Micro_E(row,col,value);
+        m_Data->Set_Micro_E(det,row,col,value);
     }
     else{
-        m_Data->Set_Micro_T(row,col,value);
+        m_Data->Set_Micro_T(det,row,col,value);
     } 
   }
 
