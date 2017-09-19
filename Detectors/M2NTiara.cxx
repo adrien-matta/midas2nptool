@@ -61,7 +61,9 @@ if(token.compare(0,1,"B")==0){ // Barrel
           m_Barrel->SetFrontDownstreamE(b,s,value);
       }
       else
-        m_Barrel->SetBackE(b,value);
+	//by Shuya 170912
+        //m_Barrel->SetBackE(b,value);
+        m_Barrel->SetOuterE(b,s,value);
     }
     else{
       if(front){
@@ -71,7 +73,9 @@ if(token.compare(0,1,"B")==0){ // Barrel
           m_Barrel->SetFrontDownstreamT(b,s,value);
       }
       else
-        m_Barrel->SetBackT(b,value);
+	//by Shuya 170912
+        //m_Barrel->SetBackT(b,value);
+        m_Barrel->SetOuterT(b,s,value);
     }
 
   }
